@@ -9,6 +9,7 @@ tags:
 authors:
   - name: Eduardo S. A. Santos
     orcid: 0000-0002-0434-3655
+    url: https://orcid.org/0000-0002-0434-3655
     affiliation:
     - ref: 1
 affiliations:
@@ -17,9 +18,17 @@ affiliations:
 date: today
 bibliography: paper.bib
 link-citations: true
+documentclass: article
 format:
   html:
     keep-md: true
+  pdf:
+    pdf-engine: lualatex
+    keep-tex: true
+header-includes:
+  - |
+    \let\oldauthor\author
+    \renewcommand{\author}[1]{\oldauthor{Eduardo S. A. Santos\\ \small COSSEE, Collaboration for Open Science and Synthesis in Ecology and Evolution,\\ \small Department of Biological Sciences, University of Alberta, Edmonton, AB, Canada\\ \small Email: \href{mailto:esantos2@ualberta.ca}{esantos2@ualberta.ca} | ORCID: \href{https://orcid.org/0000-0002-0434-3655}{https://orcid.org/0000-0002-0434-3655}}}
 ---
 
 # Summary
@@ -52,7 +61,8 @@ ris-enrich data/GoogleScholarPortugueseMateChoiceExample.ris
 Reading 'GoogleScholarPortugueseMateChoiceExample.ris'...
 Found 68 references. Starting enrichment...
 
-No email provided for Crossref API. Rate limits may be lower. Use --email or set RIS_ENRICH_EMAIL.
+No email provided for Crossref API. Rate limits may be lower. 
+Use --email or set RIS_ENRICH_EMAIL.
 [1/68] Searching: Caracterização da reprodução e ensaios de crescime...
    -> Found abstract via OpenAlex (3887 chars)
 [2/68] Searching: The role of olfaction in sexual interactions of ba...
@@ -98,9 +108,21 @@ The `ris-enrich` command can be implemented with the following arguments:
 
 Our open source Python tool, `ris-enrich`, has proven to be an effective and easy to use tool for automating the enrichment of bibliographic records, and can be used in a variety of evidence synthesis workflows.
 
+# Author contributions
+
+Eduardo S. A. Santos: Conceptualization, Methodology, Software, Validation, Formal analysis, Investigation, Data Curation, Writing – Original Draft, Writing – Review & Editing, Visualization, Project administration.
+
 # Conflict of interest disclosure
 
 The author declares that no competing interests exist.
+
+# Data availability
+
+All the datasets supporting the results of this study are available in the GitHub repository and can be accessed at [https://github.com/esantos2ua/ris-enrich](https://github.com/esantos2ua/ris-enrich). The source code for `ris-enrich` is distributed under the MIT License. The example `.ris` dataset used in this study is included in the `data/` directory of the repository.
+
+# Declaração de disponibilidade de dados da pesquisa
+
+Todo o conjunto de dados de apoio aos resultados deste estudo foi disponibilizado no repositório GitHub e pode ser acessado em [https://github.com/esantos2ua/ris-enrich](https://github.com/esantos2ua/ris-enrich). O código-fonte do `ris-enrich` é distribuído sob a Licença MIT. O conjunto de dados de exemplo no formato `.ris` utilizado neste estudo está incluído no diretório `data/` do repositório.
 
 # Acknowledgements
 

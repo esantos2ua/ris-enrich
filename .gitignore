@@ -121,3 +121,6 @@ paper/paper_files/libs/quarto-html/tabsets/tabsets.js
 # macOS system files
 .DS_Store
 **/.DS_Store
+
+# LaTeX temporary files
+paper/paper.tex

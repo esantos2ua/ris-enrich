@@ -2,14 +2,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.25">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-03-13">
+<meta name="dcterms.date" content="2026-07-17">
 
 <title>ris-enrich: An automated Python tool for enriching bibliographic RIS files with full abstracts</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -60,7 +63,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -82,23 +84,25 @@ div.csl-indent {
 <script src="paper_files/libs/clipboard/clipboard.min.js"></script>
 <script src="paper_files/libs/quarto-html/quarto.js" type="module"></script>
 <script src="paper_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="paper_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="paper_files/libs/quarto-html/popper.min.js"></script>
 <script src="paper_files/libs/quarto-html/tippy.umd.min.js"></script>
 <script src="paper_files/libs/quarto-html/anchor.min.js"></script>
 <link href="paper_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="paper_files/libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="paper_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="paper_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="paper_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="paper_files/libs/bootstrap/bootstrap-d6a003b94517c951b2d65075d42fb01b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="paper_files/libs/bootstrap/bootstrap-138a6193a3bd40baf1e627da441a4734.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+</head><body class="quarto-light">\let\oldauthor\author
+\renewcommand{\author}[1]{\oldauthor{Eduardo S. A. Santos\\ \small COSSEE, Collaboration for Open Science and Synthesis in Ecology and Evolution,\\ \small Department of Biological Sciences, University of Alberta, Edmonton, AB, Canada\\ \small Email: \href{mailto:esantos2@ualberta.ca}{esantos2@ualberta.ca} | ORCID: \href{https://orcid.org/0000-0002-0434-3655}{https://orcid.org/0000-0002-0434-3655}}}
 
 
-</head>
 
-<body class="fullcontent quarto-light">
+
+
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="paper.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></div>
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
@@ -112,7 +116,7 @@ div.csl-indent {
   <div class="quarto-title-meta-heading">Affiliation</div>
   
     <div class="quarto-title-meta-contents">
-    <p class="author">Eduardo S. A. Santos <a href="https://orcid.org/0000-0002-0434-3655" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+    <p class="author"><a href="https://orcid.org/0000-0002-0434-3655">Eduardo S. A. Santos</a> <a href="https://orcid.org/0000-0002-0434-3655" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
   </div>
   <div class="quarto-title-meta-contents">
         <p class="affiliation">
@@ -127,7 +131,7 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">March 13, 2026</p>
+      <p class="date">July 17, 2026</p>
     </div>
   </div>
   
@@ -158,7 +162,8 @@ div.csl-indent {
 <pre><code>Reading 'GoogleScholarPortugueseMateChoiceExample.ris'...
 Found 68 references. Starting enrichment...
 
-No email provided for Crossref API. Rate limits may be lower. Use --email or set RIS_ENRICH_EMAIL.
+No email provided for Crossref API. Rate limits may be lower. 
+Use --email or set RIS_ENRICH_EMAIL.
 [1/68] Searching: Caracterização da reprodução e ensaios de crescime...
    -&gt; Found abstract via OpenAlex (3887 chars)
 [2/68] Searching: The role of olfaction in sexual interactions of ba...
@@ -194,9 +199,21 @@ Done! Safely updated 22 abstracts.</code></pre>
 <p><code>ris-enrich</code> was developed as part of an evidence synthesis study that is updating two meta-analyses in Ecology and Evolution. <code>ris-enrich</code> was used to enrich bibliographic records that were retrieved from literature searches conducted in Japanese, Polish, Portuguese, Russian, Simplified/Traditional Chinese, and Spanish on Google Scholar using the application Publish or Perish software <span class="citation" data-cites="harzingPublishPerish2007">(<a href="#ref-harzingPublishPerish2007" role="doc-biblioref">Harzing 2007</a>)</span>. With <code>ris-enrich</code>, I was able to enrich a set of 425 bibliographic records with 89 complete abstracts, a 21% average improvement considering the six languages. This improvement has clear benefits for screeners that are reading titles and abstracts of these records to make decisions on whether a record should be included for full-text screening in the data pipeline of the study.</p>
 <p>Our open source Python tool, <code>ris-enrich</code>, has proven to be an effective and easy to use tool for automating the enrichment of bibliographic records, and can be used in a variety of evidence synthesis workflows.</p>
 </section>
+<section id="author-contributions" class="level1">
+<h1>Author contributions</h1>
+<p>Eduardo S. A. Santos: Conceptualization, Methodology, Software, Validation, Formal analysis, Investigation, Data Curation, Writing – Original Draft, Writing – Review &amp; Editing, Visualization, Project administration.</p>
+</section>
 <section id="conflict-of-interest-disclosure" class="level1">
 <h1>Conflict of interest disclosure</h1>
 <p>The author declares that no competing interests exist.</p>
+</section>
+<section id="data-availability" class="level1">
+<h1>Data availability</h1>
+<p>All the datasets supporting the results of this study are available in the GitHub repository and can be accessed at <a href="https://github.com/esantos2ua/ris-enrich">https://github.com/esantos2ua/ris-enrich</a>. The source code for <code>ris-enrich</code> is distributed under the MIT License. The example <code>.ris</code> dataset used in this study is included in the <code>data/</code> directory of the repository.</p>
+</section>
+<section id="declaração-de-disponibilidade-de-dados-da-pesquisa" class="level1">
+<h1>Declaração de disponibilidade de dados da pesquisa</h1>
+<p>Todo o conjunto de dados de apoio aos resultados deste estudo foi disponibilizado no repositório GitHub e pode ser acessado em <a href="https://github.com/esantos2ua/ris-enrich">https://github.com/esantos2ua/ris-enrich</a>. O código-fonte do <code>ris-enrich</code> é distribuído sob a Licença MIT. O conjunto de dados de exemplo no formato <code>.ris</code> utilizado neste estudo está incluído no diretório <code>data/</code> do repositório.</p>
 </section>
 <section id="acknowledgements" class="level1">
 <h1>Acknowledgements</h1>
@@ -215,7 +232,7 @@ Done! Safely updated 22 abstracts.</code></pre>
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-bozadaSysrevFAIRPlatform2021" class="csl-entry" role="listitem">
 Bozada, Thomas, James Borden, Jeffrey Workman, Mardo Del Cid, Jennifer Malinowski, and Thomas Luechtefeld. 2021. <span>“Sysrev: A <span>FAIR</span> Platform for Data Curation and Systematic Evidence Review.”</span> <em>Frontiers in Artificial Intelligence</em> 4 (August). <a href="https://doi.org/10.3389/frai.2021.685298">https://doi.org/10.3389/frai.2021.685298</a>.
 </div>
@@ -223,7 +240,7 @@ Bozada, Thomas, James Borden, Jeffrey Workman, Mardo Del Cid, Jennifer Malinowsk
 Grames, Eliza M., Andrew N. Stillman, Morgan W. Tingley, and Chris S. Elphick. 2019. <span>“An Automated Approach to Identifying Search Terms for Systematic Reviews Using Keyword Co-Occurrence Networks.”</span> <em>Methods in Ecology and Evolution</em> 10 (10): 1645–54. <a href="https://doi.org/10.1111/2041-210X.13268">https://doi.org/10.1111/2041-210X.13268</a>.
 </div>
 <div id="ref-harzingPublishPerish2007" class="csl-entry" role="listitem">
-Harzing, A. W. 2007. <span>“Publish or <span>Perish</span>.”</span> <a href="https://harzing.com/resources/publish-or-perish">https://harzing.com/resources/publish-or-perish</a>.
+Harzing, A. W. 2007. <em>Publish or <span>Perish</span></em>. Released. <a href="https://harzing.com/resources/publish-or-perish">https://harzing.com/resources/publish-or-perish</a>.
 </div>
 <div id="ref-ouzzaniRayyanWebMobile2016" class="csl-entry" role="listitem">
 Ouzzani, Mourad, Hossam Hammady, Zbys Fedorowicz, and Ahmed Elmagarmid. 2016. <span>“Rayyan—a Web and Mobile App for Systematic Reviews.”</span> <em>Systematic Reviews</em> 5 (1): 210. <a href="https://doi.org/10.1186/s13643-016-0384-4">https://doi.org/10.1186/s13643-016-0384-4</a>.
