@@ -117,3 +117,7 @@ paper/paper_files/libs/quarto-html/tabsets/tabsets.js
 
 # BUT! Do NOT ignore my example data
 !data/*.ris
+
+# macOS system files
+.DS_Store
+**/.DS_Store
